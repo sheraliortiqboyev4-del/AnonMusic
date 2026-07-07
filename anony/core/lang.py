@@ -24,6 +24,7 @@ lang_codes = {
     "pt": "Português",
     "ru": "Русский",
     "tr": "Türkçe",
+    "uz": "O'zbek",
     "zh": "中文"
 }
 
@@ -49,7 +50,7 @@ class Language:
 
     async def get_lang(self, chat_id: int) -> dict:
         lang_code = await db.get_lang(chat_id)
-        return self.languages[lang_code]
+        return self.languages.get(lang_code, self.languages["en"])
 
     def get_languages(self) -> dict:
         files = {f.stem for f in self.lang_dir.glob("*.json")}
@@ -83,7 +84,7 @@ class Language:
                     return await chat.leave()
 
                 lang_code = await db.get_lang(chat.id)
-                lang_dict = self.languages[lang_code]
+                lang_dict = self.languages.get(lang_code, self.languages["en"])
 
                 setattr(fallen, "lang", lang_dict)
                 try:

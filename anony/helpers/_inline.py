@@ -3,7 +3,7 @@
 # This file is part of AnonXMusic
 
 
-from pyrogram import types
+from pyrogram import types, enums
 
 from anony import app, config, lang
 from anony.core.lang import lang_codes
@@ -140,12 +140,13 @@ class Inline:
                 self.ikb(
                     text=lang["add_me"],
                     url=f"https://t.me/{app.username}?startgroup=true",
+                    style=enums.ButtonStyle.PRIMARY
                 )
             ],
-            [self.ikb(text=lang["help"], callback_data="help")],
+            [self.ikb(text=lang["help"], callback_data="help", style=enums.ButtonStyle.SUCCESS)],
             [
-                self.ikb(text=lang["support"], url=config.SUPPORT_CHAT),
-                self.ikb(text=lang["channel"], url=config.SUPPORT_CHANNEL),
+                self.ikb(text=lang["support"], url=config.SUPPORT_CHAT, style=enums.ButtonStyle.DEFAULT),
+                self.ikb(text=lang["channel"], url=config.SUPPORT_CHANNEL, style=enums.ButtonStyle.DEFAULT),
             ],
         ]
         if private:
@@ -154,11 +155,12 @@ class Inline:
                     self.ikb(
                         text=lang["source"],
                         url="https://github.com/AnonymousX1025/AnonXMusic",
+                        style=enums.ButtonStyle.DEFAULT
                     )
                 ]
             ]
         else:
-            rows += [[self.ikb(text=lang["language"], callback_data="language")]]
+            rows += [[self.ikb(text=lang["language"], callback_data="language", style=enums.ButtonStyle.DEFAULT)]]
         return self.ikm(rows)
 
     def yt_key(self, link: str) -> types.InlineKeyboardMarkup:
