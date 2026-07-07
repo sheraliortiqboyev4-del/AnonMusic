@@ -22,7 +22,7 @@ class YouTube:
         self.base = "https://www.youtube.com/watch?v="
         self.cookies = []
         self.checked = False
-        self.cookie_dir = "anony/cookies"
+        self.cookie_dir = "anony/cookies/cookies.txt"
         self.warned = False
         self.regex = re.compile(
             r"(https?://)?(www\.|m\.|music\.)?"
@@ -36,11 +36,15 @@ class YouTube:
         )
 
     def get_cookies(self):
+        
         if not self.checked:
             for file in os.listdir(self.cookie_dir):
                 if file.endswith(".txt"):
                     self.cookies.append(f"{self.cookie_dir}/{file}")
+                    logger.info(f"Using cookie: {cookie}")
             self.checked = True
+            
+            
         if not self.cookies:
             if not self.warned:
                 self.warned = True
